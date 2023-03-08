@@ -38,7 +38,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="card card-tasks">
                     <div class="card-header ">
-                        <h6 class="title d-inline">Tasks(5)</h6>
+                        <h6 class="title d-inline">Tasks({{ user_list_task[1]}} )</h6>
                         <p class="card-category d-inline">today</p>
                         <div class="dropdown">
                             <button type="button" class="btn btn-link dropdown-toggle btn-icon"
@@ -57,7 +57,7 @@
                             <table class="table">
                                 <tbody>
                                 
-                                {% for each in user_list_task %}
+                                {% for each in user_list_task[0] %}
                                     <tr>
                                         <td>
                                             <div class="form-check">
@@ -72,7 +72,7 @@
                                         <td>
                                             <p class="title">{{each.task_name}}</p>
                                             <p class="text-muted">{{each.task_info}}</p>
-                                            <p class="title">{{each.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</p>
+                                            <p class="text-muted">{{each.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</p>
                                         </td>
                                         <td class="td-actions text-right">
                                             <button type="button" rel="tooltip" title="" class="btn btn-link" data-original-title="Edit Task">

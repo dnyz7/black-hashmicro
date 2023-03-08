@@ -5,13 +5,13 @@
     "description": "Template project - Flask Boilerplate Code",
     "repository": {
         "type": "git",
-        "url": "https://github.com/app-generator/boilerplate-code-flask-dashboard"
+        "url": "https://github.com/dnyz7/black-hashmicro"
     },
     "bugs": {
-        "url": "https://github.com/app-generator/boilerplate-code-flask-dashboard/issues",
-        "email": "support@appseed.us"
+        "url": "https://github.com/dnyz7/black-hashmicro/issues",
+        "email": "denny.husniansyah@gmail.com"
     },
-    "author": "AppSeed App Generator <support@appseed.us> (https://appseed.us)",
+    "author": "Denny Husniansyah",
     "engines": {
         "node": ">=10.0.0"
     },

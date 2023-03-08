@@ -18,9 +18,7 @@ def index():
         result = add_task(current_user.id,name.title(),info.title())
 
         return redirect(url_for('task_blueprint.index'))
-        # return render_template('task/index.html',
-        #                        result,user_list_task = list_task(),
-        #                        form=create_task_form)
+        
     else:
        
         return render_template('task/index.html', user_list_task = list_task(), segment='task',form=create_task_form)
@@ -28,14 +26,9 @@ def index():
 @blueprint.route("/list_task",methods=['GET'])
 def list_task():
     try:
-        # user_task = []
         user_db_data = Task.query.filter_by(user_id=current_user.id).all()
         user_db_count = Task.query.filter_by(user_id=current_user.id).count()
-        # user_db_data = Task.query.filter_by(user_id=current_user.id).order_by(timestamp.desc()).all()
-        # for index,value in enumerate(user_db_data):
-        #     # print(value.status)
-        #     if value.status != 1:
-        #         user_task.append(value)
+       
         return user_db_data, user_db_count
     except:
         return render_template('home/page-500.html'), 500
@@ -57,17 +50,18 @@ def get_task(id):
     task = Task.query.get(id)
     if task is None:
         return render_template('home/page-404.html'), 404
-    return render_template("task.html", id=id)
+    return redirect(url_for('task_blueprint.index'))
 
-@blueprint.route("/update_task/<int:id>", methods=["GET"])
+@blueprint.route("/update_task/<int:id>", methods=["POST"])
 def delete_task(id):
     task = Task.query.get(id)
-
     if task is None:
         return render_template('home/page-404.html'), 404
-    return render_template("task.html", id=id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('task_blueprint.index'))
 
-@blueprint.route("/delete_task/<int:id>", methods=["GET"])
+@blueprint.route("/delete_task/<int:id>", methods=["POST"])
 def update_task(id):
     if not request.form:
        return render_template('home/page-400.html'), 400
@@ -78,4 +72,4 @@ def update_task(id):
     task.task_info = request.form["task_info"]
     db.session.add(task)
     db.session.commit()
-    return render_template("task.html", id=id)
+    return redirect(url_for('task_blueprint.index'))

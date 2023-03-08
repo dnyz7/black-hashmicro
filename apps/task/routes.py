@@ -33,10 +33,10 @@ def list_task():
         user_db_count = Task.query.filter_by(user_id=current_user.id).count()
         # user_db_data = Task.query.filter_by(user_id=current_user.id).order_by(timestamp.desc()).all()
         for index,value in enumerate(user_db_data):
-            print(value.status)
+            # print(value.status)
             if value.status != 1:
                 user_task.append(value)
-        return user_task, user_db_count
+        return user_db_data, user_db_count
     except:
         return render_template('home/page-500.html'), 500
     
@@ -46,8 +46,36 @@ def add_task(user_id,task_name, task_info):
         add_task = Task(user_id=user_id,task_info=task_info.title(),task_name=task_name.title())
         db.session.add(add_task)
         db.session.commit()
-        result = {"msg":"Task created successfully", "succes":True}
+        result = {"msg":"Task created successfully", "success":True}
         return result
     except:
         result = {"msg":"Create task failed", "succes":False}
         return render_template('home/page-500.html'), 500
+
+@blueprint.route("/task/<int:id>", methods=["GET"])
+def get_task(id):
+    task = Task.query.get(id)
+    if task is None:
+        return render_template('home/page-404.html'), 404
+    return render_template("task.html", id=id)
+
+@blueprint.route("/update_task/<int:id>", methods=["GET"])
+def delete_task(id):
+    task = Task.query.get(id)
+
+    if task is None:
+        return render_template('home/page-404.html'), 404
+    return render_template("task.html", id=id)
+
+@blueprint.route("/delete_task/<int:id>", methods=["GET"])
+def update_task(id):
+    if not request.form:
+       return render_template('home/page-400.html'), 400
+    task = Task.query.get(id)
+    if task is None:
+        return render_template('home/page-404.html'), 404
+    task.task_name = request.form["task_name"]
+    task.task_info = request.form["task_info"]
+    db.session.add(task)
+    db.session.commit()
+    return render_template("task.html", id=id)

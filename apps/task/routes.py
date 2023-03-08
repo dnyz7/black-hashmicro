@@ -28,14 +28,14 @@ def index():
 @blueprint.route("/list_task",methods=['GET'])
 def list_task():
     try:
-        user_task = []
+        # user_task = []
         user_db_data = Task.query.filter_by(user_id=current_user.id).all()
         user_db_count = Task.query.filter_by(user_id=current_user.id).count()
         # user_db_data = Task.query.filter_by(user_id=current_user.id).order_by(timestamp.desc()).all()
-        for index,value in enumerate(user_db_data):
-            # print(value.status)
-            if value.status != 1:
-                user_task.append(value)
+        # for index,value in enumerate(user_db_data):
+        #     # print(value.status)
+        #     if value.status != 1:
+        #         user_task.append(value)
         return user_db_data, user_db_count
     except:
         return render_template('home/page-500.html'), 500

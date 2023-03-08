@@ -2,10 +2,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
 
-class TaskForm(FlaskForm):
-    username = StringField('Task Info',
-                         id='task_info',
+class TestForm(FlaskForm):
+    string1 = StringField('Input String 1',
+                         id='string1',
                          validators=[DataRequired()])
-    password = StringField('Task Name',
-                         id='task_name',
+    string2 = StringField('Input String 2',
+                         id='string2',
                          validators=[DataRequired()])
